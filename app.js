@@ -32,6 +32,19 @@ app.get('/weather',(req,res)=>{
     })
 })
 
+app.get('/json',(req,res)=>{
+    let userInput = req.query.id ? req.query.id:1;
+    //http://localhost:3010/json?postId=1
+    let url =`https://jsonplaceholder.typicode.com/comments?postId=${userInput}`;
+    //calling api
+    request(url,(err,response)=>{
+        if(err) throw err;
+        const output = JSON.parse(response.body);
+        //res.render('index',{title:'Weather app',result:output});
+        res.send(response.body);
+    })
+})
+
 app.listen(port,(err)=>{
     if(err) throw err;
     console.log(`Running on port ${port}`)
